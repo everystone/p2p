@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "NetSocket.h"
+#include "ConnectionManager.h"
 #pragma warning(disable:4996)
-
 
 void NetSocket::Open(boost::asio::io_service& io_service, std::string ip, std::string port)
 {
@@ -26,6 +26,7 @@ void NetSocket::handle_accept(Connection::pointer new_connection,
 {
 	if (!error)
 	{
+		ConnectionManager::Add(new_connection);
 		new_connection->start();
 	}
 
@@ -40,8 +41,14 @@ void NetSocket::start_accept() {
 void NetSocket::Serve(boost::asio::io_service& io_service, unsigned short port)
 {
 	this->_acceptor = new tcp::acceptor(io_service, tcp::endpoint(tcp::v4(), port));
+	start_accept();
+
 }
 
+
+void NetSocket::ReadAsync() {
+
+}
 
 //
 //void NetSocket::Read()

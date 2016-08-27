@@ -17,7 +17,6 @@ public:
 
 	tcp::socket& socket();
 	void start();
-
 private:
 
 	Connection(boost::asio::io_service& io_service)
@@ -26,10 +25,14 @@ private:
 
 	};
 
+
 	void handle_write(const boost::system::error_code& /*error*/,
 		size_t /*bytes_transferred*/);
 
 	tcp::socket _socket;
 	std::string _message;
+
+	//Connection(const Connection& copy){}
+	Connection& operator=(const Connection& assign){}
 };
 

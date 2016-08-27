@@ -16,7 +16,9 @@ int main()
 	catch (std::exception& e) {
 		std::cerr << e.what() << std::endl;
 	}
-	std::cin.get();
+
+	std::cout << "Server listening..\n";
+	//std::cin.get();
     return 0;
 }
 
