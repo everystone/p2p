@@ -38,7 +38,6 @@ void Connection::async_read()
 	boost::asio::async_read(m_socket, boost::asio::buffer((char*)&msgptr->header(), sizeof(message_header)),
 	boost::bind(&Connection::handle_read_header, shared_from_this(),
 	boost::asio::placeholders::error, msgptr));
-
 }
 
 void Connection::handle_read_header(const boost::system::error_code &e, message_ptr msgptr)
@@ -57,9 +56,10 @@ void Connection::handle_read_header(const boost::system::error_code &e, message_
 	}
 
 
+
 	// Read payload
 	boost::asio::async_read(m_socket, boost::asio::buffer(msgptr->payload(), msgptr->length()),
-		boost::bind(&Connection::handle_read_header, shared_from_this(), boost::asio::placeholders::error, msgptr));
+		boost::bind(&Connection::handle_read_data, shared_from_this(), boost::asio::placeholders::error, msgptr));
 }
 
 void Connection::handle_read_data(const boost::system::error_code &e, message_ptr msgptr)
