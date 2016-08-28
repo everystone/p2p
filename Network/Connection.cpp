@@ -79,4 +79,3 @@ void Connection::log_packet(message_ptr msgptr)
 	//printf("{0}->{1}: {2}", boost::posix_time::second_clock::local_time(), m_socket.remote_endpoint().address().to_string(), msgptr->str());
 	std::cout << boost::posix_time::to_simple_string(boost::posix_time::second_clock::local_time()) << " " << m_socket.remote_endpoint().address().to_string() << " -> " << msgptr->str() << std::endl;
 }
-
