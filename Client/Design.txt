@@ -1,0 +1,24 @@
+
+
+Userstories:
+
+I start my client, it connects to a server(?) and authenticates.
+My client requests a userlist, which comes back with user information ( name, ip:port, link speed).
+My client then opens connections to all the users.
+When the other client receives the connections, my name pops up in the other clients userlist.
+
+
+
+I do a search:
+
+My client sends the search request to all connected peers
+
+
+I download a file:
+
+My client sends a request, with message type download_file, and ID of file.
+The peer responds a status  ( OK ), my client begins downloading file. 
+
+OR
+
+My client somehow downloads the file from multiple peers/nodes.

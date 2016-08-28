@@ -6,8 +6,8 @@ class ConnectionManager
 {
 public:
 
-	 static void Add(Connection::pointer con);
-	 static std::list<Connection::pointer> Connections;
+	 static void Add(connection_ptr con);
+	 static std::list<connection_ptr> Connections;
 	//static Connection Get(int index);
 private:
 

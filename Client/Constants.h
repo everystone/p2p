@@ -1,8 +1,9 @@
 #pragma once
-class Constants
+static enum Messages
 {
-public:
-	Constants();
-	~Constants();
+	keep_alive = 0,
+	get_files,
+	download_file,
+	upload_File 
 };
 

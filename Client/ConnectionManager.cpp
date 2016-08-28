@@ -4,7 +4,7 @@
 // Initialize Static member...
 std::list<boost::shared_ptr<Connection>> ConnectionManager::Connections = {};
 
-void ConnectionManager::Add(Connection::pointer con)
+void ConnectionManager::Add(connection_ptr con)
 {
 	//Connections.emplace(con);
 	ConnectionManager::Connections.push_back(con);

@@ -3,24 +3,31 @@
 #include <boost/asio.hpp>
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/bind.hpp>
-#include <iostream>
+#include <boost/date_time.hpp>
+#include "message.h"
+
 using boost::asio::ip::tcp;
+class Connection;
+typedef boost::shared_ptr<Connection> connection_ptr;
 
 class Connection : public boost::enable_shared_from_this<Connection>
 {
 public:
-	typedef boost::shared_ptr<Connection> pointer;
+	
+	void Write(std::string message);
 
-	static pointer create(boost::asio::io_service& io_service) {
-		return pointer(new Connection(io_service));
+
+	static connection_ptr create(boost::asio::io_service& io_service) {
+		return connection_ptr(new Connection(io_service));
 	}
 
 	tcp::socket& socket();
 	void start();
+
 private:
 
 	Connection(boost::asio::io_service& io_service)
-		: _socket(io_service)
+		: m_socket(io_service)
 	{
 
 	};
@@ -29,9 +36,12 @@ private:
 	void handle_write(const boost::system::error_code& /*error*/,
 		size_t /*bytes_transferred*/);
 
-	tcp::socket _socket;
-	std::string _message;
-
+	void async_read();
+	void handle_read_header(const boost::system::error_code &, message_ptr msgptr);
+	void handle_read_data(const boost::system::error_code &, message_ptr msgptr);
+	void log_packet(message_ptr msgptr);
+	tcp::socket m_socket;
+	bool m_shutdown;
 	//Connection(const Connection& copy){}
 	Connection& operator=(const Connection& assign){}
 };

@@ -1,28 +1,28 @@
 #pragma once
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
+
 #include <boost/bind.hpp>
 #include "Connection.h"
-#include <iostream>
 using boost::asio::ip::tcp;
 
-class NetSocket
+class Router
 {
 public:
 
 	void Open(boost::asio::io_service& io_service, std:: string ip, std::string port);
 	void Serve(boost::asio::io_service& io_service, unsigned short port);
-	void ReadAsync();
-	void Read();
-	//void Listen(int port);
+	void register_connection(connection_ptr con);
 	void Close();
 
 
 
 private:
 	//boost::asio::io_service io_service;
-	void handle_accept(Connection::pointer new_connection, const boost::system::error_code& error);
+	void handle_accept(connection_ptr new_connection, const boost::system::error_code& error);
 	void start_accept();
+	std::vector<connection_ptr> m_connections;
+	//boost::mutex m_connections_mutex; // protects connections
 	tcp::acceptor* _acceptor;
 };
 
