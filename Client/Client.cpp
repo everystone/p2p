@@ -15,11 +15,10 @@ void iorun(boost::asio::io_service * ios)
 int main()
 {
 	boost::asio::io_service io;
-
-
+	Router router;
 	try {
-		Router server;
-		server.Serve(io, 2222);
+		
+		router.Serve(io, 2222);
 		boost::thread t(boost::bind(&iorun, &io));
 		std::cout << "Server listening on 2222.\n";
 	}
@@ -27,7 +26,8 @@ int main()
 		std::cerr << e.what() << std::endl;
 	}
 
-	
+
+	router.Open(io, "127.0.0.1", 2222);
 	std::cin.get();
     return 0;
 }

@@ -1,23 +1,45 @@
 #include "stdafx.h"
 #include "router.h"
-#include "ConnectionManager.h"
 #pragma warning(disable:4996)
 
-void Router::Open(boost::asio::io_service& io_service, std::string ip, std::string port)
+
+
+// Opens a new connection to remote client
+void Router::Open(boost::asio::io_service& io_service, std::string ip, short port)
 {
 	try {
-		tcp::resolver resolver(io_service);
-		tcp::resolver::query query(ip, port);
-		tcp::resolver::iterator endpoint_iterator = resolver.resolve(query);
-		tcp::socket socket(io_service);
+		//tcp::resolver resolver(io_service);
+		//tcp::resolver::query query(ip, port);
+		//tcp::resolver::iterator endpoint_iterator = resolver.resolve(query);
+		//tcp::socket socket(io_service);
 		//socket.connect(*endpoint_iterator);
-		boost::asio::connect(socket, endpoint_iterator);
+		boost::asio::ip::address_v4 ipaddr = boost::asio::ip::address_v4::from_string(ip);
+		boost::asio::ip::tcp::endpoint ep(ipaddr, port);
+
+		connection_ptr new_connection = Connection::create(this->m_acceptor->get_io_service());
+		// Start an asynchronous connect operation.
+		new_connection->socket().async_connect(ep,
+			boost::bind(&Router::handle_connect, this,
+				boost::asio::placeholders::error, ep, new_connection));
 	}
 	catch (std::exception& e) {
 		std::cerr << e.what() << std::endl;
 		std::cin.get();
 	}
-	std::cout << "Connected to " << ip << ":" << port << std::endl;
+
+}
+
+void Router::handle_connect(const boost::system::error_code& e,
+	boost::asio::ip::tcp::endpoint &endpoint,
+	connection_ptr conn)
+{
+	if (e) {
+		std::cerr << "Failed to connect out to remote peer: " << e.message() << std::endl;
+		return;
+	}
+	std::cout << "Connected to " << endpoint.address().to_string() << std::endl;
+	register_connection(conn);
+	conn->async_read(); // start read loop for this connection
 }
 
 
@@ -34,13 +56,13 @@ void Router::handle_accept(connection_ptr new_connection,
 }
 
 void Router::start_accept() {
-	connection_ptr nConnection = Connection::create(this->_acceptor->get_io_service());
-	_acceptor->async_accept(nConnection->socket(), boost::bind(&Router::handle_accept, this, nConnection, boost::asio::placeholders::error));
+	connection_ptr nConnection = Connection::create(this->m_acceptor->get_io_service());
+	m_acceptor->async_accept(nConnection->socket(), boost::bind(&Router::handle_accept, this, nConnection, boost::asio::placeholders::error));
 }
 
 void Router::Serve(boost::asio::io_service& io_service, unsigned short port)
 {
-	this->_acceptor = new tcp::acceptor(io_service, tcp::endpoint(tcp::v4(), port));
+	this->m_acceptor = new tcp::acceptor(io_service, tcp::endpoint(tcp::v4(), port));
 	start_accept();
 	
 }

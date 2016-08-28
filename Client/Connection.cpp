@@ -55,8 +55,6 @@ void Connection::handle_read_header(const boost::system::error_code &e, message_
 		handle_read_data(e, msgptr);
 	}
 
-
-
 	// Read payload
 	boost::asio::async_read(m_socket, boost::asio::buffer(msgptr->payload(), msgptr->length()),
 		boost::bind(&Connection::handle_read_data, shared_from_this(), boost::asio::placeholders::error, msgptr));

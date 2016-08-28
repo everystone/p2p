@@ -13,7 +13,7 @@ typedef boost::shared_ptr<Connection> connection_ptr;
 class Connection : public boost::enable_shared_from_this<Connection>
 {
 public:
-	
+	void async_read();
 	void Write(std::string message);
 
 
@@ -36,7 +36,7 @@ private:
 	void handle_write(const boost::system::error_code& /*error*/,
 		size_t /*bytes_transferred*/);
 
-	void async_read();
+
 	void handle_read_header(const boost::system::error_code &, message_ptr msgptr);
 	void handle_read_data(const boost::system::error_code &, message_ptr msgptr);
 	void log_packet(message_ptr msgptr);
