@@ -20,6 +20,7 @@
     <ClCompile Include="client.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="clientpimpl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Constants.h">
@@ -46,6 +47,7 @@
     <ClInclude Include="client.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="clientpimpl.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Design.txt" />

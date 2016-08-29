@@ -1,20 +1,19 @@
 #pragma once
 #include "router.h"
 #include <boost/thread/thread.hpp>
-namespace Network {
-	class Client
-	{
-	public:
-		Client(short port);
-		Client();
-		bool Listen(short port);
-		bool Connect(std::string ip, short port);
 
-		~Client();
+class Client
+{
+public:
+	Client(short port);
+	Client();
+	bool Listen(short port);
+	bool Connect(char* ip, short port);
 
-	private:
-		boost::asio::io_service io;
-		Router router;
-	};
+	~Client();
 
-}
+private:
+	boost::asio::io_service io;
+	Network::Router router;
+};
+

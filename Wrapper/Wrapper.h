@@ -1,21 +1,25 @@
 // Wrapper.h
 
 #pragma once
-#include "client.h"
+#include "clientpimpl.h"
 
 #pragma 
 using namespace System;
 
 namespace NetworkWrapper {
 
-	ref class NetworkWrapper
+	public ref class NetworkWrapper
 	{
-	private:
-		Network::Client *_client;
+
+	public:
 		NetworkWrapper() {}
 		NetworkWrapper(short port) {
-			_client = new Network::Client(port);
+			_client = new ClientPimpl(port);
 		}
+
+
+	private:
+		ClientPimpl *_client;
 		bool Connect(String ^ip, short port) {
 			return _client->Connect((char *)System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(ip).ToPointer(), port);
 		}

@@ -22,6 +22,9 @@ namespace wpfClient
         public MainWindow()
         {
             InitializeComponent();
+
+            NetworkWrapper.NetworkWrapper jalla = new NetworkWrapper.NetworkWrapper(2222);
+
         }
     }
 }
