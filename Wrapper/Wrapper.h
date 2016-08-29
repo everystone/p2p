@@ -20,8 +20,9 @@ namespace NetworkWrapper {
 
 	private:
 		ClientPimpl *_client;
-		bool Connect(String ^ip, short port) {
-			return _client->Connect((char *)System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(ip).ToPointer(), port);
+		bool Connect(char* ip, short port) {
+			//return _client->Connect((char *)System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(ip).ToPointer(), port);
+			return _client->Connect(ip, port);
 		}
 		bool Listen(short port) {
 			return _client->Listen(port);

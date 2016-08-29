@@ -7,7 +7,7 @@
 #include <boost/thread/thread.hpp>
 
 
-void iorun(boost::asio::io_service * ios)
+void iorun2(boost::asio::io_service * ios)
 {
 	ios->run();
 	std::cout << "io ended" << std::endl;
@@ -20,7 +20,7 @@ int main()
 	try {
 		
 		router.Serve(io, 2222);
-		boost::thread t(boost::bind(&iorun, &io));
+		boost::thread t(boost::bind(&iorun2, &io));
 		std::cout << "Server listening on 2222.\n";
 	}
 	catch (std::exception& e) {

@@ -9,7 +9,7 @@ namespace Network {
 	{
 	public:
 
-		bool Open(boost::asio::io_service& io_service, std::string ip, short port);
+		bool Open(boost::asio::io_service& io_service, const char* ip, short port);
 		void handle_connect(const boost::system::error_code & e, boost::asio::ip::tcp::endpoint & endpoint, connection_ptr conn);
 		void Serve(boost::asio::io_service& io_service, unsigned short port);
 		void register_connection(connection_ptr con);

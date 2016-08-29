@@ -5,7 +5,7 @@
 namespace Network {
 
 	// Opens a new connection to remote client
-	bool Router::Open(boost::asio::io_service& io_service, std::string ip, short port)
+	bool Router::Open(boost::asio::io_service& io_service, const char* ip, short port)
 	{
 		try {
 			//tcp::resolver resolver(io_service);

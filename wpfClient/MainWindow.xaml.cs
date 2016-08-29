@@ -23,8 +23,13 @@ namespace wpfClient
         {
             InitializeComponent();
 
-            NetworkWrapper.NetworkWrapper jalla = new NetworkWrapper.NetworkWrapper(2222);
+           
 
+        }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            NetworkWrapper.NetworkWrapper jalla = new NetworkWrapper.NetworkWrapper(2222);
         }
     }
 }
