@@ -11,6 +11,11 @@ namespace Network {
 				boost::asio::placeholders::bytes_transferred));
 	}
 
+	std::string Connection::str()
+	{
+		return m_socket.remote_endpoint().address().to_string();
+	}
+
 	tcp::socket & Connection::socket()
 	{
 		return m_socket;

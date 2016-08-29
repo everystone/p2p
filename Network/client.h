@@ -19,6 +19,7 @@ public:
 	bool Connect(char* ip, short port);
 
 	void set_progress_delegate(ProgressDelegate progress);
+	void set_connect_delegate(ConnectDelegate connect);
 
 	// https://msdn.microsoft.com/en-us/library/ee2k0a7d.aspx
 	//void(*OnConnected)(void);

@@ -33,7 +33,12 @@ namespace wpfClient
         private void button_Click(object sender, RoutedEventArgs e)
         {
             _net = new NetworkWrapper(2222);
-            _net.ProgressChanged += _net_ProgressChanged;
+            _net.Connected += _net_Connected2;
+        }
+
+        private void _net_Connected2(string ip)
+        {
+            
         }
 
         private void _net_ProgressChanged(double progress)

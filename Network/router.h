@@ -18,7 +18,7 @@ namespace Network {
 
 
 		//callbacks
-		ProgressDelegate OnConnected;
+		ConnectDelegate OnConnected;
 
 	private:
 		//boost::asio::io_service io_service;

@@ -16,7 +16,7 @@ namespace Network {
 	public:
 		void async_read();
 		void Write(std::string message);
-
+		std::string str();
 
 		static connection_ptr create(boost::asio::io_service& io_service) {
 			return connection_ptr(new Connection(io_service));

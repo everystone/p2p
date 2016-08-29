@@ -55,7 +55,7 @@ namespace Network {
 			new_connection->start();
 
 			if (this->OnConnected != nullptr) {
-				this->OnConnected(100);
+				this->OnConnected(new_connection->str());
 			}
 		}
 
