@@ -32,14 +32,13 @@ namespace wpfClient
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            //NetworkWrapper.NetworkWrapper jalla = new NetworkWrapper.NetworkWrapper(2222);
             _net = new NetworkWrapper(2222);
             _net.ProgressChanged += _net_ProgressChanged;
-
         }
 
         private void _net_ProgressChanged(double progress)
         {
+            MessageBox.Show("Progress: " + progress);
             Debug.WriteLine("Progress: " + progress);
         }
     }

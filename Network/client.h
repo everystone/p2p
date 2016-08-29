@@ -31,7 +31,6 @@ private:
 	boost::asio::io_service io;
 	Network::Router router;
 	//PFOnEventCallback m_fireEvent;
-	tProgressDelegate *progress;
 	
 
 	

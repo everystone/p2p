@@ -40,8 +40,8 @@ bool Client::Connect(char* ip, short port)
 
 void Client::set_progress_delegate(ProgressDelegate progress)
 {
-	this->progress = progress;
 	this->router.OnConnected = progress;
+	std::cout << "Registered progress delegate: " << progress << std::endl;
 }
 
 Client::~Client()

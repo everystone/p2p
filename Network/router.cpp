@@ -39,10 +39,10 @@ namespace Network {
 		}
 		std::cout << "Connected to " << endpoint.address().to_string() << std::endl;
 		//__raise this->ConnectEvent(endpoint.address().to_string());
-		this->OnConnected(100);
+		
 		register_connection(conn);
 		conn->async_read(); // start read loop for this connection
-		
+		//this->OnConnected(100);
 	}
 
 
@@ -52,8 +52,11 @@ namespace Network {
 		if (!error)
 		{
 			register_connection(new_connection);
-			this->OnConnected(100);
 			new_connection->start();
+
+			if (this->OnConnected != nullptr) {
+				this->OnConnected(100);
+			}
 		}
 
 		start_accept();
