@@ -3,6 +3,7 @@
 #include <boost/asio.hpp>
 #include <boost/bind.hpp>
 #include "Connection.h"
+#include "typedefs.h"
 using boost::asio::ip::tcp;
 namespace Network {
 	class Router
@@ -16,6 +17,8 @@ namespace Network {
 		void Close();
 
 
+		//callbacks
+		ProgressDelegate OnConnected;
 
 	private:
 		//boost::asio::io_service io_service;

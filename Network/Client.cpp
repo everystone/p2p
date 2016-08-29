@@ -11,12 +11,12 @@ void iorun(boost::asio::io_service * ios)
 Client::Client(short port)
 {
 	this->Listen(port);
+
+	// Hookup events
+	//__hook(&Network::Router::ConnectEvent, &this->router, &Client::OnConnected);
+	//__hook(&Network::Router::DisconnectEvent, &this->router, &Client::OnDisconnected);
 }
 
-Client::Client()
-{
-
-}
 
 bool Client::Listen(short port)
 {
@@ -38,7 +38,14 @@ bool Client::Connect(char* ip, short port)
 	return this->router.Open(this->io, ip, port);
 }
 
+void Client::set_progress_delegate(ProgressDelegate progress)
+{
+	this->progress = progress;
+	this->router.OnConnected = progress;
+}
+
 Client::~Client()
 {
 
 }
+

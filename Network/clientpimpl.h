@@ -1,15 +1,17 @@
 #pragma once
-
+#include "typedefs.h"
 class Client;
 
 class ClientPimpl
 {
 public:
 	ClientPimpl(short port);
-	ClientPimpl();
 	~ClientPimpl();
 	bool Listen(short port);
 	bool Connect(char* ip, short port);
+
+	void set_progress_delegate(ProgressDelegate progress);
+	//void SetupEvents(void(*OnConnected)(void), void(*OnDisconnected)(void));
 
 private:
 	Client *client;
