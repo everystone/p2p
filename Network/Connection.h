@@ -44,7 +44,7 @@ namespace Network {
 		tcp::socket m_socket;
 		bool m_shutdown;
 		//Connection(const Connection& copy){}
-		Connection& operator=(const Connection& assign) {}
+                //Connection& operator=(const Connection& assign) {}
 	};
 
 }
