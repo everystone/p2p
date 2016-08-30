@@ -23,14 +23,14 @@ bool ClientPimpl::Connect(char* ip, short port)
 	return client->Connect(ip, port);
 }
 
-void ClientPimpl::set_progress_delegate(ProgressDelegate progress) {
-	client->set_progress_delegate(progress);
-}
-
-void ClientPimpl::set_connect_delegate(ConnectDelegate connect)
-{
-	client->set_connect_delegate(connect);
-}
+//void ClientPimpl::set_progress_delegate(ProgressDelegate progress) {
+//	client->set_progress_delegate(progress);
+//}
+//
+//void ClientPimpl::set_connect_delegate(ConnectDelegate connect)
+//{
+//	client->set_connect_delegate(connect);
+//}
 
 //void ClientPimpl::SetupEvents(void(*OnConnected)(void), void(*OnDisconnected)(void))
 //{

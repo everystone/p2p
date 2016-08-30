@@ -18,7 +18,8 @@ namespace Network {
 
 
 		//callbacks
-		ConnectDelegate OnConnected;
+		ConnectCallback OnConnected;
+		//void(*OnConnected)(std::string ip);
 
 	private:
 		//boost::asio::io_service io_service;

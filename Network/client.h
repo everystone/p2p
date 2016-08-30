@@ -8,9 +8,6 @@
 //	std::string data;
 //};
 
-//typedef void (__stdcall * PFOnEventCallback)(dataEvent);
-
-
 class Client
 {
 public:
@@ -18,17 +15,13 @@ public:
 	bool Listen(short port);
 	bool Connect(char* ip, short port);
 
-	void set_progress_delegate(ProgressDelegate progress);
-	void set_connect_delegate(ConnectDelegate connect);
+	//void set_progress_delegate(ProgressDelegate progress);
+	void set_connect_delegate(ConnectCallback connect);
 
-	// https://msdn.microsoft.com/en-us/library/ee2k0a7d.aspx
-	//void(*OnConnected)(void);
-	//void(*OnDisconnected)(void);
 
 	~Client();
 
 private:
-	void setup_callbacks();
 	boost::asio::io_service io;
 	Network::Router router;
 	//PFOnEventCallback m_fireEvent;
