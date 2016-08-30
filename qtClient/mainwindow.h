@@ -5,34 +5,33 @@
 #include <QMessageBox>
 #include <QString>
 #include <QStandardItemModel>
-#include "client.h"
 #include "typedefs.h"
+#include "networkwrapper.h"
 
 namespace Ui {
 class MainWindow;
 }
 
-class MainWindow : public QMainWindow, public ICallbacks
+class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    void OnConnect(std::string);
-    void OnDisconnect(std::string);
+
 
 public slots:
     void AddSystemMessage(QString);
 
 signals:
-    void SystemMessageSignal(QString);
+    //void SystemMessageSignal(QString);
 
 private:
     Ui::MainWindow *ui;
-    Client *m_client;
     QStandardItemModel *m_messagesModel;
     QStringList m_systemMessages;
+    NetworkWrapper *m_network;
 
 };
 
