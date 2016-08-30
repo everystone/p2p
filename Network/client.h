@@ -16,7 +16,7 @@ public:
 	bool Connect(char* ip, short port);
 
 	//void set_progress_delegate(ProgressDelegate progress);
-	void set_connect_delegate(ConnectCallback connect);
+	void set_connect_delegate(ICallbacks* connect);
 
 
 	~Client();
@@ -24,6 +24,7 @@ public:
 private:
 	boost::asio::io_service io;
 	Network::Router router;
+	ICallbacks* callbacks;
 	//PFOnEventCallback m_fireEvent;
 	
 

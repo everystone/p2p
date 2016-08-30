@@ -54,8 +54,8 @@ namespace Network {
 			register_connection(new_connection);
 			new_connection->start();
 
-			if (this->OnConnected != nullptr) {
-				this->OnConnected(new_connection->str());
+			if (this->Callbacks != nullptr) {
+				this->Callbacks->OnConnect(new_connection->str());
 			}
 		}
 

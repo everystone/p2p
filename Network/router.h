@@ -19,6 +19,7 @@ namespace Network {
 
 		//callbacks
 		ConnectCallback OnConnected;
+		ICallbacks* Callbacks;
 		//void(*OnConnected)(std::string ip);
 
 	private:
