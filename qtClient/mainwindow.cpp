@@ -9,9 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Setup UI
     this->m_messagesModel = new QStandardItemModel(this);
-    this->m_systemMessages.append("Init");
     ui->systemMessagesListView->setModel(this->m_messagesModel);
-    this->m_messagesModel->setItem(0,new QStandardItem(QString("Init..")));
 
     // Setup Network
     this->m_network = new NetworkWrapper(2222);

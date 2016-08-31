@@ -31,7 +31,6 @@ signals:
 private:
     Ui::MainWindow *ui;
     QStandardItemModel *m_messagesModel;
-    QStringList m_systemMessages;
     NetworkWrapper *m_network;
 
 };

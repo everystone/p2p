@@ -52,7 +52,7 @@ namespace Network {
 		if (e) {
 			// Lost connection
 			std::cerr << "err " << e.value() << " handle_read_header " << e.message() << std::endl;
-			this->m_callbacks->OnDisconnect("Disconnected from " + this->str());
+			this->m_callbacks->OnDisconnect(this->str());
 			return;
 		}
 		log_packet(msgptr);
