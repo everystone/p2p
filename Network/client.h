@@ -13,7 +13,7 @@ class Client
 public:
 	Client(short port, ICallbacks* cb);
 	bool Listen(short port);
-	bool Connect(char* ip, short port);
+	bool Connect(const char* ip, short port);
 
 
 	~Client();

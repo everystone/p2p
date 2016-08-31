@@ -13,6 +13,7 @@ public:
     void OnConnect(std::string);
     void OnDisconnect(std::string);
     void OnError(std::string);
+    void ConnectToHost(QString);
 
 signals:
     void ConnectSignal(QString);

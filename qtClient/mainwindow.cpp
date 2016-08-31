@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <qinputdialog.h>
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -8,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     // Setup UI
+    this->m_settings = new SettingsDialog(this);
     this->m_messagesModel = new QStandardItemModel(this);
     this->m_connectionsModel = new QStandardItemModel(this);
     ui->systemMessagesListView->setModel(this->m_messagesModel);
@@ -47,4 +50,19 @@ void MainWindow::DisplayErrorMsgBox(QString text)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+// Main Menu Actions
+void MainWindow::on_actionConnect_triggered()
+{
+    bool ok;
+    QString ip = QInputDialog::getText(this, tr("Connect to peer.."),tr("Enter IP Address"), QLineEdit::Normal,"127.0.0.1", &ok);
+    if (ok && !ip.isEmpty()) {
+        this->m_network->ConnectToHost(ip);
+    }
+}
+
+void MainWindow::on_actionSettings_triggered()
+{
+    this->m_settings->exec();
 }

@@ -18,12 +18,16 @@ namespace Network {
 
 			connection_ptr new_connection = Connection::create(this->m_acceptor->get_io_service(), this->m_callbacks);
 			// Start an asynchronous connect operation.
+			std::cout << "Connecting to " << ip << std::endl;
 			new_connection->socket().async_connect(ep,
 				boost::bind(&Router::handle_connect, this,
 					boost::asio::placeholders::error, ep, new_connection));
 		}
 		catch (std::exception& e) {
 			std::cerr << e.what() << std::endl;
+			std::stringstream err;
+			err << "Connection failed: " << e.what() << std::endl;
+			this->m_callbacks->OnError(err.str());
 			return false;
 		}
 		return true;

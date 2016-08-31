@@ -1,3 +1,5 @@
+Bugs:
+- Connecting to random IP results in success
 
 
 Userstories:
@@ -6,6 +8,12 @@ I start my client, it connects to a server(?) and authenticates.
 My client requests a userlist, which comes back with user information ( name, ip:port, link speed).
 My client then opens connections to all the users.
 When the other client receives the connections, my name pops up in the other clients userlist.
+
+
+Options:
+- Act as proxy ( others can relay packets through this client )
+- Share connection info ( share users and ips to client sending discovery packets )
+
 
 
 

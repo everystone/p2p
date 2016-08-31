@@ -21,3 +21,10 @@ void NetworkWrapper::OnError(std::string err){
     QString msg = QString("%1").arg(err.c_str());
     emit ErrorSignal(msg);
 }
+
+void NetworkWrapper::ConnectToHost(QString host)
+{
+    std::string str = host.toStdString();
+    const char* p = str.c_str();
+    this->m_client->Connect(p, 2222);
+}

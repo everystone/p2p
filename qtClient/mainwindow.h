@@ -7,6 +7,7 @@
 #include <QStandardItemModel>
 #include "typedefs.h"
 #include "networkwrapper.h"
+#include "settingsdialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -29,11 +30,17 @@ public slots:
 signals:
     //void SystemMessageSignal(QString);
 
+private slots:
+    void on_actionConnect_triggered();
+
+    void on_actionSettings_triggered();
+
 private:
     Ui::MainWindow *ui;
     NetworkWrapper *m_network;
     QStandardItemModel *m_messagesModel;
     QStandardItemModel *m_connectionsModel;
+    SettingsDialog *m_settings;
 
 };
 

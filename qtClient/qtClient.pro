@@ -14,15 +14,15 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    dialog.cpp \
-    networkwrapper.cpp
+    networkwrapper.cpp \
+    settingsdialog.cpp
 
 HEADERS  += mainwindow.h \
-    dialog.h \
-    networkwrapper.h
+    networkwrapper.h \
+    settingsdialog.h
 
 FORMS    += mainwindow.ui \
-    dialog.ui
+    settingsdialog.ui
 
 
 

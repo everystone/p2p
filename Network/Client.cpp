@@ -30,7 +30,7 @@ bool Client::Listen(short port)
 	return true;
 }
 
-bool Client::Connect(char* ip, short port)
+bool Client::Connect(const char* ip, short port)
 {
 	return this->m_router.Open(this->io, ip, port);
 }
