@@ -24,14 +24,16 @@ public:
 public slots:
     void AddSystemMessage(QString);
     void DisplayErrorMsgBox(QString);
+    void AddConnection(QString);
 
 signals:
     //void SystemMessageSignal(QString);
 
 private:
     Ui::MainWindow *ui;
-    QStandardItemModel *m_messagesModel;
     NetworkWrapper *m_network;
+    QStandardItemModel *m_messagesModel;
+    QStandardItemModel *m_connectionsModel;
 
 };
 
