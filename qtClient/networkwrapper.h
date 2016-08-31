@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include "typedefs.h"
-#include "client.h"
+class Client; //forward declared
 class NetworkWrapper : public QObject, ICallbacks
 {
     Q_OBJECT
@@ -12,6 +12,7 @@ public:
     NetworkWrapper(short port);
     void OnConnect(std::string);
     void OnDisconnect(std::string);
+
 signals:
     void ConnectSignal(QString);
     void DisconnectSignal(QString);
@@ -19,7 +20,7 @@ signals:
 public slots:
 
 private:
-Client *m_client;
+    Client *m_client;
 };
 
 #endif // NETWORKWRAPPER_H

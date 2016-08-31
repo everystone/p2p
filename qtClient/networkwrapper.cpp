@@ -1,4 +1,5 @@
 #include "networkwrapper.h"
+#include "client.h"
 
 NetworkWrapper::NetworkWrapper(short port){
     this->m_client = new Client(port);
