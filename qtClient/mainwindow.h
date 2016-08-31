@@ -23,6 +23,7 @@ public:
 
 public slots:
     void AddSystemMessage(QString);
+    void DisplayErrorMsgBox(QString);
 
 signals:
     //void SystemMessageSignal(QString);

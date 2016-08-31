@@ -16,7 +16,7 @@ namespace Network {
 			boost::asio::ip::address_v4 ipaddr = boost::asio::ip::address_v4::from_string(ip);
 			boost::asio::ip::tcp::endpoint ep(ipaddr, port);
 
-			connection_ptr new_connection = Connection::create(this->m_acceptor->get_io_service());
+			connection_ptr new_connection = Connection::create(this->m_acceptor->get_io_service(), this->m_callbacks);
 			// Start an asynchronous connect operation.
 			new_connection->socket().async_connect(ep,
 				boost::bind(&Router::handle_connect, this,
@@ -34,12 +34,20 @@ namespace Network {
 		connection_ptr conn)
 	{
 		if (e) {
-			std::cerr << "Failed to connect out to remote peer: " << e.message() << std::endl;
+			std::stringstream err;
+			err << "Failed to connect out to remote peer: " << e.message() << std::endl;
+			this->m_callbacks->OnError(err.str());
 			return;
 		}
 		std::cout << "Connected to " << endpoint.address().to_string() << std::endl;
 		register_connection(conn);
 		conn->async_read(); // start read loop for this connection
+	}
+
+	void Router::handle_disconnect(connection_ptr conn)
+	{
+		unregister_connection(conn);
+		this->m_callbacks->OnDisconnect(conn->str());
 	}
 
 
@@ -51,8 +59,8 @@ namespace Network {
 			register_connection(new_connection);
 			new_connection->start();
 
-			if (this->Callbacks != nullptr) {
-				this->Callbacks->OnConnect(new_connection->str());
+			if (this->m_callbacks != NULL) {
+				this->m_callbacks->OnConnect(new_connection->str());
 			}
 		}
 
@@ -60,12 +68,13 @@ namespace Network {
 	}
 
 	void Router::start_accept() {
-		connection_ptr nConnection = Connection::create(this->m_acceptor->get_io_service());
+		connection_ptr nConnection = Connection::create(this->m_acceptor->get_io_service(), this->m_callbacks);
 		m_acceptor->async_accept(nConnection->socket(), boost::bind(&Router::handle_accept, this, nConnection, boost::asio::placeholders::error));
 	}
 
-	void Router::Serve(boost::asio::io_service& io_service, unsigned short port)
+	void Router::Serve(boost::asio::io_service& io_service, unsigned short port, ICallbacks* cb)
 	{
+		this->m_callbacks = cb;
 		this->m_acceptor = new tcp::acceptor(io_service, tcp::endpoint(tcp::v4(), port));
 		start_accept();
 
@@ -73,10 +82,33 @@ namespace Network {
 
 	void Router::register_connection(connection_ptr con)
 	{
+		boost::mutex::scoped_lock lk(m_connections_mutex);
+		std::vector<connection_ptr>::iterator it;
+		for (it = m_connections.begin(); it < m_connections.end(); ++it)
+		{
+			if (*it == con)
+			{
+				// already registered, wtf?
+				std::cout << "ERROR connection already registered!" << std::endl;
+				assert(false);
+				return;
+			}
+		}
 		m_connections.push_back(con);
 	}
 
-
+	void Router::unregister_connection(connection_ptr con) {
+		boost::mutex::scoped_lock lk(m_connections_mutex);
+		std::vector<connection_ptr>::iterator it;
+		for (it = m_connections.begin(); it < m_connections.end(); ++it)
+		{
+			if (*it == con)
+			{
+				m_connections.erase(it);
+				//cout << "Router::unregistered " << conn->str() << endl;
+			}
+		}
+	}
 
 
 	std::string make_daytime_string()

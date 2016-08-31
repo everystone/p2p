@@ -19,7 +19,7 @@ int main()
 	Network::Router router;
 	try {
 		
-		router.Serve(io, 2222);
+		router.Serve(io, 2222, nullptr);
 		boost::thread t(boost::bind(&iorun2, &io));
 		std::cout << "Server listening on 2222.\n";
 	}

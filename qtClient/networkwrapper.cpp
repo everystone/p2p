@@ -2,8 +2,7 @@
 #include "client.h"
 
 NetworkWrapper::NetworkWrapper(short port){
-    this->m_client = new Client(port);
-    this->m_client->set_connect_delegate(this);
+    this->m_client = new Client(port, this);
 }
 
 void NetworkWrapper::OnConnect(std::string ip){
@@ -16,4 +15,9 @@ void NetworkWrapper::OnDisconnect(std::string ip){
     std::cout << ip << " Disconnected." << std::endl;
     QString msg = QString("%1 Disconnected").arg(ip.c_str());
     emit DisconnectSignal(msg);
+}
+
+void NetworkWrapper::OnError(std::string err){
+    QString msg = QString("%1").arg(err.c_str());
+    emit ErrorSignal(msg);
 }

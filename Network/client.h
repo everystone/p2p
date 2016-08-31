@@ -11,20 +11,17 @@
 class Client
 {
 public:
-	Client(short port);
+	Client(short port, ICallbacks* cb);
 	bool Listen(short port);
 	bool Connect(char* ip, short port);
-
-	//void set_progress_delegate(ProgressDelegate progress);
-	void set_connect_delegate(ICallbacks* connect);
 
 
 	~Client();
 
 private:
 	boost::asio::io_service io;
-	Network::Router router;
-	ICallbacks* callbacks;
+	Network::Router m_router;
+	ICallbacks* m_callbacks;
 	//PFOnEventCallback m_fireEvent;
 	
 

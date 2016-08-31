@@ -2,9 +2,9 @@
 #include "clientpimpl.h"
 #include "client.h"
 
-ClientPimpl::ClientPimpl(short port)
+ClientPimpl::ClientPimpl(short port, ICallbacks* cb)
 {
-	client = new Client(port);
+	client = new Client(port, cb);
 }
 
 

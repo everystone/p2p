@@ -13,7 +13,7 @@ class ICallbacks
 public:
 	virtual void OnConnect(std::string) = 0;
 	virtual void OnDisconnect(std::string) = 0;
-
+	virtual void OnError(std::string) = 0;
 };
 
 //typedef void ConnectCallback(std::string ip);

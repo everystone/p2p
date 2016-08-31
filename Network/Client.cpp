@@ -8,13 +8,10 @@ void iorun(boost::asio::io_service * ios)
 	//std::cout << "io ended" << std::endl;
 }
 
-Client::Client(short port)
+Client::Client(short port, ICallbacks* cb)
 {
+	this->m_callbacks = cb;
 	this->Listen(port);
-
-	// Hookup events
-	//__hook(&Network::Router::ConnectEvent, &this->router, &Client::OnConnected);
-	//__hook(&Network::Router::DisconnectEvent, &this->router, &Client::OnDisconnected);
 }
 
 
@@ -22,7 +19,7 @@ bool Client::Listen(short port)
 {
 	try {
 
-		router.Serve(io, port);
+		m_router.Serve(io, port, this->m_callbacks);
 		boost::thread t(boost::bind(&iorun, &io));
 		//std::cout << "Server listening on 2222.\n";
 	}
@@ -35,21 +32,9 @@ bool Client::Listen(short port)
 
 bool Client::Connect(char* ip, short port)
 {
-	return this->router.Open(this->io, ip, port);
+	return this->m_router.Open(this->io, ip, port);
 }
 
-//void Client::set_progress_delegate(ProgressDelegate progress)
-//{
-//	//this->router.OnConnected = progress;
-//	std::cout << "Registered progress delegate: " << progress << std::endl;
-//}
-void Client::set_connect_delegate(ICallbacks* connect)
-{
-	//this->router.OnConnected = connect;
-	//
-	this->callbacks = connect;
-	this->router.Callbacks = connect;
-}
 
 Client::~Client()
 {

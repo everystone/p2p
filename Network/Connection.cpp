@@ -50,7 +50,9 @@ namespace Network {
 	{
 		if (m_shutdown) return;
 		if (e) {
+			// Lost connection
 			std::cerr << "err " << e.value() << " handle_read_header " << e.message() << std::endl;
+			this->m_callbacks->OnDisconnect("Disconnected from " + this->str());
 			return;
 		}
 		log_packet(msgptr);

@@ -12,10 +12,12 @@ public:
     NetworkWrapper(short port);
     void OnConnect(std::string);
     void OnDisconnect(std::string);
+    void OnError(std::string);
 
 signals:
     void ConnectSignal(QString);
     void DisconnectSignal(QString);
+    void ErrorSignal(QString);
 
 public slots:
 

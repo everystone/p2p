@@ -40,3 +40,6 @@ QMAKE_LIBDIR += C:/boost_1_61_0/stage/lib/
 
 PRE_TARGETDEPS += $$PWD/../lib/native/Network.lib
 PRE_TARGETDEPS += C:/boost_1_61_0/stage/lib/libboost_system-vc140-mt-gd-1_61.lib
+
+DISTFILES += \
+    notes.txt

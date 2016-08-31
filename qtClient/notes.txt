@@ -1,0 +1,6 @@
+"Cannot instantiate abstract class NetworkManager"
+- Missing header definition/implementation of virtual methods. ( OnError, OnDisconnect, etc)
+
+LNK2001: unresolved external symbol "public: virtual void __thiscall NetworkWrapper::OnError(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?OnError@NetworkWrapper@@UAEXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+- Missing implementation of virtual methods ( void OnError(std::string)) in NetworkWrapper.cpp
+- Can also be related to QMake not having compiled something.

@@ -5,6 +5,7 @@
 #include <boost/bind.hpp>
 #include <boost/date_time.hpp>
 #include "message.h"
+#include "typedefs.h"
 
 namespace Network {
 	using boost::asio::ip::tcp;
@@ -18,8 +19,8 @@ namespace Network {
 		void Write(std::string message);
 		std::string str();
 
-		static connection_ptr create(boost::asio::io_service& io_service) {
-			return connection_ptr(new Connection(io_service));
+		static connection_ptr create(boost::asio::io_service& io_service, ICallbacks* cb) {
+			return connection_ptr(new Connection(io_service, cb));
 		}
 
 		tcp::socket& socket();
@@ -27,22 +28,20 @@ namespace Network {
 
 	private:
 
-		Connection(boost::asio::io_service& io_service)
+		Connection(boost::asio::io_service& io_service, ICallbacks *cb)
 			: m_socket(io_service)
 		{
-
+			this->m_callbacks = cb;
 		};
 
 
-		void handle_write(const boost::system::error_code& /*error*/,
-			size_t /*bytes_transferred*/);
-
-
+		void handle_write(const boost::system::error_code& /*error*/, size_t /*bytes_transferred*/);
 		void handle_read_header(const boost::system::error_code &, message_ptr msgptr);
 		void handle_read_data(const boost::system::error_code &, message_ptr msgptr);
 		void log_packet(message_ptr msgptr);
 		tcp::socket m_socket;
 		bool m_shutdown;
+		ICallbacks *m_callbacks;
 		//Connection(const Connection& copy){}
                 //Connection& operator=(const Connection& assign) {}
 	};
