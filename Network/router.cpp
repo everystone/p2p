@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "router.h"
 #include "messages.h"
+#include <boost/foreach.hpp>
 #pragma warning(disable:4996)
 
 namespace Network {
@@ -134,8 +135,20 @@ namespace Network {
 	void Router::ping() {
 		message_ptr ping = message_ptr(new PingMessage(this->uuid()));
 		//todo: send to all sockets.
+		send_all(ping);
 	}
 	void Router::close()
 	{
+	}
+
+	void Router::send_all(message_ptr msgp)
+	{
+		//foreach_conns( boost::bind(&Connection::async_write, _1, msgp) );
+		boost::mutex::scoped_lock lk(m_connections_mutex);
+		BOOST_FOREACH(connection_ptr conn, m_connections)
+		{
+			//cout << "Sending " << msgp->str() << " to " << conn->str() << endl;
+			conn->async_write(msgp);
+		}
 	}
 }

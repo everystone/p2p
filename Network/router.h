@@ -17,6 +17,7 @@ namespace Network {
 		void serve(boost::asio::io_service& io_service, unsigned short port, ICallbacks *cb);
 		void message_received(message_ptr msgp, connection_ptr conn);
 		void ping();
+		void send_all(message_ptr msgp);
 		void close();
 		std::string uuid();
 
