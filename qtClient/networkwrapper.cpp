@@ -13,7 +13,7 @@ void NetworkWrapper::OnConnect(std::string ip){
 
 void NetworkWrapper::OnDisconnect(std::string ip){
     std::cout << ip << " Disconnected." << std::endl;
-    QString msg = QString("%1 Disconnected").arg(ip.c_str());
+    QString msg = QString("%1").arg(ip.c_str());
     emit DisconnectSignal(msg);
 }
 
@@ -26,5 +26,8 @@ void NetworkWrapper::ConnectToHost(QString host)
 {
     std::string str = host.toStdString();
     const char* p = str.c_str();
-    this->m_client->Connect(p, 2222);
+    this->m_client->connect(p, 2222);
+}
+void NetworkWrapper::Ping(){
+    this->m_client->ping();
 }

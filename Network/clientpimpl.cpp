@@ -15,12 +15,12 @@ ClientPimpl::~ClientPimpl()
 
 bool ClientPimpl::Listen(short port)
 {
-	return client->Listen(port);
+	return client->listen(port);
 }
 
 bool ClientPimpl::Connect(char* ip, short port)
 {
-	return client->Connect(ip, port);
+	return client->connect(ip, port);
 }
 
 //void ClientPimpl::set_progress_delegate(ProgressDelegate progress) {

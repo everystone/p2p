@@ -11,15 +11,15 @@ void iorun(boost::asio::io_service * ios)
 Client::Client(short port, ICallbacks* cb)
 {
 	this->m_callbacks = cb;
-	this->Listen(port);
+	this->listen(port);
 }
 
 
-bool Client::Listen(short port)
+bool Client::listen(short port)
 {
 	try {
 
-		m_router.Serve(io, port, this->m_callbacks);
+		m_router.serve(io, port, this->m_callbacks);
 		boost::thread t(boost::bind(&iorun, &io));
 		//std::cout << "Server listening on 2222.\n";
 	}
@@ -30,9 +30,15 @@ bool Client::Listen(short port)
 	return true;
 }
 
-bool Client::Connect(const char* ip, short port)
+bool Client::connect(const char* ip, short port)
 {
-	return this->m_router.Open(this->io, ip, port);
+	return this->m_router.open(this->io, ip, port);
+}
+
+/// Send Ping packet to all sockets
+void Client::ping()
+{
+	this->m_router.ping();
 }
 
 

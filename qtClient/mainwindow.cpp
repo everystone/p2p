@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <qinputdialog.h>
-
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Connect signals from network wrapper
     QObject::connect(this->m_network, SIGNAL(ConnectSignal(QString)), this, SLOT(AddConnection(QString)));
-    QObject::connect(this->m_network, SIGNAL(DisconnectSignal(QString)), this, SLOT(AddSystemMessage(QString)));
+    QObject::connect(this->m_network, SIGNAL(DisconnectSignal(QString)), this, SLOT(RemoveConnection(QString)));
     QObject::connect(this->m_network, SIGNAL(ErrorSignal(QString)), this, SLOT(DisplayErrorMsgBox(QString)));
 }
 
@@ -38,6 +38,20 @@ void MainWindow::AddConnection(QString ip){
     //node->setSizeHint(QSize(32,32));
     node->setText(ip);
     this->m_connectionsModel->appendRow(node);
+    this->m_network->Ping();
+}
+void MainWindow::RemoveConnection(QString ip){
+    this->AddSystemMessage(("Lost connection: "+ip));
+    QList<QStandardItem*> list = this->m_connectionsModel->findItems(ip,Qt::MatchContains);
+    for(int i=0;i<list.length();i++) {
+        qDebug() << "item: " << list[i]->text();
+    }
+    if(list.length() > 0){
+        this->m_connectionsModel->removeRow(list.first()->index().row());
+    }else {
+        qDebug() << "No matching connections found in list\n";
+    }
+
 }
 
 void MainWindow::DisplayErrorMsgBox(QString text)

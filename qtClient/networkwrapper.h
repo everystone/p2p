@@ -15,6 +15,7 @@ public:
     void OnError(std::string);
     void ConnectToHost(QString);
 
+    void Ping();
 signals:
     void ConnectSignal(QString);
     void DisconnectSignal(QString);

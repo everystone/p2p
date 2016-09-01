@@ -55,6 +55,9 @@
     <ClInclude Include="typedefs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="messages.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Design.txt" />

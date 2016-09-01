@@ -27,6 +27,7 @@ public slots:
     void DisplayErrorMsgBox(QString);
     void AddConnection(QString);
 
+    void RemoveConnection(QString ip);
 signals:
     //void SystemMessageSignal(QString);
 

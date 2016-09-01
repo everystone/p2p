@@ -1,11 +1,11 @@
 #include "stdafx.h"
 #include "router.h"
+#include "messages.h"
 #pragma warning(disable:4996)
 
 namespace Network {
-
 	// Opens a new connection to remote client
-	bool Router::Open(boost::asio::io_service& io_service, const char* ip, short port)
+	bool Router::open(boost::asio::io_service& io_service, const char* ip, short port)
 	{
 		try {
 			//tcp::resolver resolver(io_service);
@@ -16,7 +16,7 @@ namespace Network {
 			boost::asio::ip::address_v4 ipaddr = boost::asio::ip::address_v4::from_string(ip);
 			boost::asio::ip::tcp::endpoint ep(ipaddr, port);
 
-			connection_ptr new_connection = Connection::create(this->m_acceptor->get_io_service(), this->m_callbacks);
+			connection_ptr new_connection = Connection::create(this->m_acceptor->get_io_service(), this, this->m_callbacks);
 			// Start an asynchronous connect operation.
 			std::cout << "Connecting to " << ip << std::endl;
 			new_connection->socket().async_connect(ep,
@@ -32,10 +32,11 @@ namespace Network {
 		}
 		return true;
 	}
-
-	void Router::handle_connect(const boost::system::error_code& e,
-		boost::asio::ip::tcp::endpoint &endpoint,
-		connection_ptr conn)
+	std::string Router::uuid()
+	{
+		return boost::uuids::to_string(this->generator());
+	}
+	void Router::handle_connect(const boost::system::error_code& e, boost::asio::ip::tcp::endpoint &endpoint, connection_ptr conn)
 	{
 		if (e) {
 			std::stringstream err;
@@ -53,10 +54,7 @@ namespace Network {
 		unregister_connection(conn);
 		this->m_callbacks->OnDisconnect(conn->str());
 	}
-
-
-	void Router::handle_accept(connection_ptr new_connection,
-		const boost::system::error_code& error)
+	void Router::handle_accept(connection_ptr new_connection, const boost::system::error_code& error)
 	{
 		if (!error)
 		{
@@ -72,16 +70,28 @@ namespace Network {
 	}
 
 	void Router::start_accept() {
-		connection_ptr nConnection = Connection::create(this->m_acceptor->get_io_service(), this->m_callbacks);
+		connection_ptr nConnection = Connection::create(this->m_acceptor->get_io_service(), this, this->m_callbacks);
 		m_acceptor->async_accept(nConnection->socket(), boost::bind(&Router::handle_accept, this, nConnection, boost::asio::placeholders::error));
 	}
-
-	void Router::Serve(boost::asio::io_service& io_service, unsigned short port, ICallbacks* cb)
+	void Router::serve(boost::asio::io_service& io_service, unsigned short port, ICallbacks* cb)
 	{
 		this->m_callbacks = cb;
 		this->m_acceptor = new tcp::acceptor(io_service, tcp::endpoint(tcp::v4(), port));
 		start_accept();
 
+	}
+
+	void Router::message_received(message_ptr msgp, connection_ptr conn)
+	{
+		switch (msgp->type()) {
+		case PING:
+			std::cout << "got ping from " << conn->str() << std::endl;
+			conn->async_write(message_ptr(new PongMessage(this->uuid())));
+			break;
+		case PONG:
+			std::cout << "got pong from " << conn->str() << std::endl;
+			break;
+		}
 	}
 
 	void Router::register_connection(connection_ptr con)
@@ -114,15 +124,18 @@ namespace Network {
 		}
 	}
 
-
 	std::string make_daytime_string()
 	{
 		using namespace std; // For time_t, time and ctime;
 		time_t now = time(0);
 		return ctime(&now);
 	}
-
-	void Router::Close()
+	// Send ping packet to all
+	void Router::ping() {
+		message_ptr ping = message_ptr(new PingMessage(this->uuid()));
+		//todo: send to all sockets.
+	}
+	void Router::close()
 	{
 	}
 }
