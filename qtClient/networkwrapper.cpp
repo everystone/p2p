@@ -16,6 +16,15 @@ void NetworkWrapper::OnDisconnect(std::string ip){
     QString msg = QString("%1").arg(ip.c_str());
     emit DisconnectSignal(msg);
 }
+void NetworkWrapper::OnSend(int mType){
+
+}
+void NetworkWrapper::OnReceive(int mType){
+
+}
+void NetworkWrapper::OnListen(short port){
+
+}
 
 void NetworkWrapper::OnError(std::string err){
     QString msg = QString("%1").arg(err.c_str());

@@ -12,6 +12,10 @@ public:
     NetworkWrapper(short port);
     void OnConnect(std::string);
     void OnDisconnect(std::string);
+    void OnSend(int mType);
+    void OnListen(short port);
+    void OnReceive(int mType);
+
     void OnError(std::string);
     void ConnectToHost(QString);
 

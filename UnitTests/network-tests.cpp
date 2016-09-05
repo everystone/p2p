@@ -51,32 +51,33 @@ namespace UnitTests
 			
 			client = new Client(2222, &cb);
 			client2 = new Client(2225, &cb2);
+			Assert::IsTrue(cb.listening);
+			Assert::IsTrue(cb2.listening);
+			client->connect("127.0.0.1", 2225);
+			Sleep(50);
+			Assert::IsTrue(cb.connected);
+			Assert::IsTrue(cb2.connected);
 		}
 		TEST_CLASS_CLEANUP(cleanup) {
 			client->stop();
+			client2->stop();
 		}
-		TEST_METHOD(listen) {
 
-			Assert::IsTrue(cb.listening);
-			Assert::IsTrue(cb2.listening);
-		}
 
 		TEST_METHOD(send_receive)
 		{
 			Assert::AreEqual(0, cb.sent);
-			client->connect("127.0.0.1", 2225);
-			// sleep
-			Sleep(200);
-			Assert::IsTrue(cb.connected);
-			Assert::IsTrue(cb2.connected);
+
 			client->ping();
-			Assert::AreEqual(1, cb.sent); // sent ping
-			Sleep(200);
-			Assert::AreEqual(1, cb2.received); // received ping
-			Assert::AreEqual(1, cb.received); // received pong
+			Sleep(50);
+			Assert::AreEqual(1, cb.sent);		// sent ping
+			Assert::AreEqual(1, cb2.received);	// received ping
+			Assert::AreEqual(1, cb2.sent);		// sent pong
+			Assert::AreEqual(1, cb.received);	// received pong
+		}
 
-
-
+		TEST_METHOD(file_transfers) {
+			
 		}
 	};
 
