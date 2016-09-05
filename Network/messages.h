@@ -55,4 +55,11 @@ namespace Network {
 			m_payload = 0;
 		}
 	};
+
+	class FileRequestMessage : public Message
+	{
+	public:
+		FileRequestMessage(std::string uid, File)
+
+	};
 }

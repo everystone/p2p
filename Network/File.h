@@ -5,9 +5,12 @@ class File
 public:
 	File(std::string fileName, int size);
 
+	int size();
+	std::string name();
+
 private:
-	std::string name;
-	int size;
-	int seeds;
+	std::string m_filename;
+	int m_size;
+	int m_seeds;
 };
 

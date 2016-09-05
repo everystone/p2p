@@ -158,7 +158,7 @@
     <ClInclude Include="clientpimpl.h" />
     <ClInclude Include="Connection.h" />
     <ClInclude Include="Constants.h" />
-    <ClInclude Include="File.h" />
+    <ClInclude Include="file.h" />
     <ClInclude Include="message.h" />
     <ClInclude Include="client.h" />
     <ClInclude Include="messages.h" />
@@ -166,12 +166,14 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="typedefs.h" />
+    <ClInclude Include="user.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="clientpimpl.cpp" />
+    <ClCompile Include="user.cpp" />
     <ClCompile Include="_Client.cpp" />
     <ClCompile Include="Connection.cpp" />
-    <ClCompile Include="File.cpp" />
+    <ClCompile Include="file.cpp" />
     <ClCompile Include="message.cpp" />
     <ClCompile Include="client.cpp" />
     <ClCompile Include="router.cpp" />
