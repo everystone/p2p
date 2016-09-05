@@ -8,7 +8,7 @@ NetworkWrapper::NetworkWrapper(short port){
 void NetworkWrapper::OnConnect(std::string ip){
     QString msg = QString("%1").arg(ip.c_str());
     emit ConnectSignal(msg);
-    std::cout << "Connection from: " << ip << std::endl;
+    std::cout << "OnConnect: " << ip << std::endl;
 }
 
 void NetworkWrapper::OnDisconnect(std::string ip){

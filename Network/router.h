@@ -33,5 +33,6 @@ namespace Network {
 		boost::mutex m_connections_mutex; // protects connections
 		tcp::acceptor* m_acceptor;
 		ICallbacks* m_callbacks;
+		boost::asio::io_service* m_io;
 	};
 }

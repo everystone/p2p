@@ -15,6 +15,7 @@ public:
 	bool listen(short port);
 	bool connect(const char* ip, short port);
 	void ping();
+	void stop();
 
 	~Client();
 

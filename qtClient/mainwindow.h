@@ -20,20 +20,18 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-
+    void SetupNetwork(short port);
 
 public slots:
     void AddSystemMessage(QString);
     void DisplayErrorMsgBox(QString);
     void AddConnection(QString);
-
     void RemoveConnection(QString ip);
 signals:
     //void SystemMessageSignal(QString);
 
 private slots:
     void on_actionConnect_triggered();
-
     void on_actionSettings_triggered();
 
 private:

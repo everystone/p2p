@@ -13,7 +13,9 @@ Client::Client(short port, ICallbacks* cb)
 	this->m_callbacks = cb;
 	this->listen(port);
 }
-
+void Client::stop() {
+	this->m_router.close();
+}
 
 bool Client::listen(short port)
 {

@@ -16,13 +16,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->systemMessagesListView->setModel(this->m_messagesModel);
     ui->ConnectionsListView->setModel(this->m_connectionsModel);
 
-    // Setup Network
-    this->m_network = new NetworkWrapper(2222);
-
-    // Connect signals from network wrapper
-    QObject::connect(this->m_network, SIGNAL(ConnectSignal(QString)), this, SLOT(AddConnection(QString)));
-    QObject::connect(this->m_network, SIGNAL(DisconnectSignal(QString)), this, SLOT(RemoveConnection(QString)));
-    QObject::connect(this->m_network, SIGNAL(ErrorSignal(QString)), this, SLOT(DisplayErrorMsgBox(QString)));
 }
 
 
@@ -64,6 +57,17 @@ void MainWindow::DisplayErrorMsgBox(QString text)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::SetupNetwork(short port)
+{
+    // Setup Network
+    this->m_network = new NetworkWrapper(port);
+    //AddSystemMessage("Listening on " + port);
+    // Connect signals from network wrapper
+    QObject::connect(this->m_network, SIGNAL(ConnectSignal(QString)), this, SLOT(AddConnection(QString)));
+    QObject::connect(this->m_network, SIGNAL(DisconnectSignal(QString)), this, SLOT(RemoveConnection(QString)));
+    QObject::connect(this->m_network, SIGNAL(ErrorSignal(QString)), this, SLOT(DisplayErrorMsgBox(QString)));
 }
 
 // Main Menu Actions

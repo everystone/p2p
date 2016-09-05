@@ -19,7 +19,9 @@ namespace Network {
 	{
 	public:
 		void async_read();
-		void async_write(message_ptr msg);
+		void write(message_ptr msg);
+		void do_write(message_ptr msg);
+		//void async_write(message_ptr msg);
 		//void Write(std::string message);
 		std::string str();
 
@@ -38,10 +40,11 @@ namespace Network {
 		};
 
 
-		void handle_write(const boost::system::error_code& /*error*/, size_t /*bytes_transferred*/);
-		void do_async_write(const boost::system::error_code & e, message_ptr finished_msg);
+		//void do_async_write(const boost::system::error_code & e, message_ptr finished_msg);
+		
 		void handle_read_header(const boost::system::error_code &, message_ptr msgptr);
 		void handle_read_data(const boost::system::error_code &, message_ptr msgptr);
+		void handle_write(const boost::system::error_code &);
 		void log_packet(message_ptr msgptr);
 		Router *m_router;
 		tcp::socket m_socket;

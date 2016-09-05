@@ -3,7 +3,6 @@
 
 #include "stdafx.h"
 #include "router.h"
-
 #include <boost/thread/thread.hpp>
 
 
@@ -18,7 +17,6 @@ int main()
 	boost::asio::io_service io;
 	Network::Router router;
 	try {
-		
 		router.serve(io, 2222, nullptr);
 		boost::thread t(boost::bind(&iorun2, &io));
 		std::cout << "Server listening on 2222.\n";
