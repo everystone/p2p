@@ -150,6 +150,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <Text Include="Bugs.txt" />
     <Text Include="Design.txt" />
     <Text Include="ReadMe.txt" />
   </ItemGroup>

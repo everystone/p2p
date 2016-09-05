@@ -146,6 +146,7 @@ namespace Network {
 		msgptr->malloc_payload();
 		if (msgptr->length() == 0) {
 			handle_read_data(e, msgptr);
+			return;
 		}
 
 		// Read payload

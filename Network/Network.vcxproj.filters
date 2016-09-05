@@ -62,6 +62,7 @@
   <ItemGroup>
     <Text Include="Design.txt" />
     <Text Include="ReadMe.txt" />
+    <Text Include="Bugs.txt" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

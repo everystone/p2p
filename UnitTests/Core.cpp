@@ -63,10 +63,20 @@ namespace UnitTests
 
 		TEST_METHOD(send_receive)
 		{
+			Assert::AreEqual(0, cb.sent);
 			client->connect("127.0.0.1", 2225);
 			// sleep
-			Sleep(500);
+			Sleep(200);
 			Assert::IsTrue(cb.connected);
+			Assert::IsTrue(cb2.connected);
+			client->ping();
+			Assert::AreEqual(1, cb.sent); // sent ping
+			Sleep(200);
+			Assert::AreEqual(1, cb2.received); // received ping
+			Assert::AreEqual(1, cb.received); // received pong
+
+
+
 		}
 	};
 
