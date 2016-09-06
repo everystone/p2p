@@ -91,6 +91,18 @@ namespace Network {
 		case PONG:
 			std::cout << "got pong from " << conn->str() << std::endl;
 			break;
+		case USER_INFO:
+			// Read username, create new user object and add to users. if a connection already exist for user, add to pool? overwrite?
+
+			break;
+		case FILE_REQUEST:
+			// check if we have file, start sending file on existing/new sokcet?
+			// call send_file on user associated with this connection?
+			break;
+		case FILE_RESPONSE:
+			break;
+		case FILE_DATA:
+			break;
 		}
 	}
 

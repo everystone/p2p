@@ -15,7 +15,6 @@ MainWindow::MainWindow(QWidget *parent) :
     this->m_connectionsModel = new QStandardItemModel(this);
     ui->systemMessagesListView->setModel(this->m_messagesModel);
     ui->ConnectionsListView->setModel(this->m_connectionsModel);
-
 }
 
 

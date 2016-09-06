@@ -1,10 +1,14 @@
 #pragma once
 #include "message.h"
-
+#include "File.h"
 namespace Network {
 
 #define PING 0
 #define PONG 1
+#define USER_INFO 2
+#define FILE_REQUEST 3
+#define FILE_RESPONSE 4
+#define FILE_DATA 5
 
 
 	class GeneralMessage : public Message
@@ -59,7 +63,17 @@ namespace Network {
 	class FileRequestMessage : public Message
 	{
 	public:
-		FileRequestMessage(std::string uid, File)
+		FileRequestMessage(std::string uid, std::string fileGuid)
+		{
 
+			message_header h;
+			memcpy(&h.guid, uid.c_str(), 36);
+			h.type = FILE_REQUEST;
+			h.ttl = 1;
+			h.hops = 0;
+			h.length = htonl(fileGuid.length());
+			malloc_payload();
+			memcpy(m_payload, fileGuid.data(), fileGuid.length);
+		}
 	};
 }
